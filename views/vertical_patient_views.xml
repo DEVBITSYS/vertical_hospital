@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- VISTA DE ARBOL -->
+    <record id="view_vertical_hospital_tree" model="ir.ui.view">
+        <field name="name">vertical.patient.tree</field>
+        <field name="model">vertical.patient</field>
+        <field name="arch" type="xml">
+            <tree string="Recibo de Caja">
+                <field name="name"/>
+                <field name="company_id" invisible="1"/>
+                <field name="patient_name"/>
+                <field name="patient_last_name"/>
+                <field name="dni" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- VISTA FORM -->
+    <record id="view_vertical_hospital_form" model="ir.ui.view">
+        <field name="name">vertical.patient.form</field>
+        <field name="model">vertical.patient</field>
+        <field name="arch" type="xml">
+            <form string="Pacientes" class="o_expense_form">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,expired,payed"/>
+                    <button string="Borrador" name="sent_to_draft" type="object" states="done"/>
+                    <button string="Alta" name="action_discharge" type="object" states="draft"/>
+                    <button string="Baja" name="action_release" type="object" states="draft"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="patient_name"/>
+                            <field name="patient_last_name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" invisible="1"/>
+                            <field name="dni" />
+                            <field name="discharge_date" />
+                        </group>
+                        <group>
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Tratamientos" name="treatments_ids">
+                            <!-- <field name="receipt_ids">
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="receipt_id" invisible="1"/>
+                                    <field name="move_id"/>
+                                    <field name="vr_document"/>
+                                    <field name="rte_fte"/>
+                                    <field name="rte_iva"/>
+                                    <field name="is_discount"/>
+                                    <field name="amount_residual"/>                                    
+                                </tree>
+                            </field> -->
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+
+    <!--Acción-->
+        <record id="actions_vertical_hospital" model="ir.actions.act_window">
+            <field name="name">Vertical hospital</field>
+            <field name="res_model">vertical.patient</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+        Create a new record
+                </p>
+            </field>
+        </record>
+
+    <!--Menú-->
+    <menuitem id="menu_vertical_hospital_root" name="Vertical Hospital" web_icon="vertical_hospital,static/description/icon.png" groups="base.group_user" sequence="6" />
+    <!--Sub-Menú-->     
+    <menuitem id="menu_vertical_hospital" name="Vertical Hospital" sequence="1" parent="menu_vertical_hospital_root" groups="base.group_user"/>
+    <!--Llamado a la acción-->
+    <menuitem id="vertical_hospital_menu" sequence="1" parent="menu_vertical_hospital" action="actions_vertical_hospital"/>
+
+
+
+
+    <!--Acción-->
+    <record id="action_vertical_patients_form" model="ir.actions.act_window">
+        <field name="name">Pacientes</field>
+        <field name="res_model">vertical.patient</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Elemento de menú -->
+    <menuitem id="menu_vertical_patient" name="Pacientes" parent="vertical_hospital.menu_vertical_hospital_root" sequence="3" action="action_vertical_patients_form" />
+
+</odoo>

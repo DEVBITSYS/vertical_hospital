@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- VISTA DE ARBOL -->
+    <record id="view_vertical_treatmen_tree" model="ir.ui.view">
+        <field name="name">vertical.treatment.tree</field>
+        <field name="model">vertical.treatment</field>
+        <field name="arch" type="xml">
+            <tree string="Tratamientos">
+                <field name="name"/>
+                <field name="company_id" invisible="1"/>
+                <field name="code"/>
+                <field name="partner_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- VISTA FORM -->
+    <record id="view_vertical_hospital_form" model="ir.ui.view">
+        <field name="name">vertical.treatment.form</field>
+        <field name="model">vertical.treatment</field>
+        <field name="arch" type="xml">
+            <form string="Tratamientos" class="o_expense_form">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" invisible="1"/>
+                            <field name="code" />
+                        </group>
+                        <group>
+                            <field name="partner_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- <menuitem id="menu_vertical_treatment" name="Tratamientos" parent="vertical_hospital.menu_vertical_hospital_root" sequence="2" action="view_vertical_hospital_form" /> -->
+
+    <!--Acción-->
+    <record id="action_treatment_form" model="ir.actions.act_window">
+        <field name="name">Tratamientos</field>
+        <field name="res_model">vertical.treatment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Elemento de menú -->
+    <menuitem id="menu_treatment" name="Tratamientos" parent="vertical_hospital.menu_vertical_hospital_root" sequence="4" action="action_treatment_form" />
+</odoo>
